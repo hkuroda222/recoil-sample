@@ -9,8 +9,8 @@ function App() {
   return (
     <RecoilRoot>
       <div className="App">
-        <TodoList />
         <h1>Learning Recoil</h1>
+        <TodoList />
       </div>
     </RecoilRoot>
   );

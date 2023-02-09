@@ -6,7 +6,7 @@ export const todoListAtom = atom({
   default: [
     {
       id: 0,
-      title: '',
+      title: 'atomサンプル',
       isComplete: false,
     },
   ],
