@@ -1,23 +1,29 @@
-import React from 'react';
-import { useRecoilValue } from 'recoil';
+import React, { useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { todoListAtom } from '../atom/todoListAtom';
-import { todoListSelector } from '../selector/todoList';
+import { todoListAtom } from 'recoil/atom/todoListAtom';
+import { todoListSelector } from 'recoil/selector/todoList';
 
 export const TodoList: React.FC = () => {
+  const [text, setText] = useState<string>('');
+  const [todoList, setTodoList] = useRecoilState(todoListAtom);
   // useRecoilValueを使ってatomを引用する(read only)
-  const todoList = useRecoilValue(todoListAtom);
   const totalNum = useRecoilValue(todoListSelector);
 
-  console.log(todoList);
-  console.log(totalNum);
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setText(e.target.value);
+
+  const createTodoItem = () =>
+    setTodoList((prev) => [...prev, { title: text }]);
 
   return (
     <div>
-      <span>{totalNum}件</span>
+      <input type="text" onChange={handleChangeText} />
+      <button onClick={createTodoItem}>保存</button>
+      <div>{totalNum}件</div>
       <ul>
-        {todoList.map((item) => (
-          <li key={item.id}>{item.title}</li>
+        {todoList.map((item, i) => (
+          <li key={`todo-${i}`}>{item.title}</li>
         ))}
       </ul>
     </div>
